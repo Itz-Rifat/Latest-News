@@ -14,7 +14,7 @@ const Navbar = () => {
             </div>
             <div className="flex gap-3 justify-between items-center">
                 <img src={User} alt="" />
-                <button className="btn btn-neutral rounded-none">Login</button>
+                <Link to="/auth/login" className="btn btn-neutral rounded-none">Login</Link>
             </div>
         </div>
     )

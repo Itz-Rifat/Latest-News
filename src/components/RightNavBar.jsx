@@ -3,9 +3,14 @@ import facebook from "../assets/fb.png"
 
 const RightNavBar = () => {
   return (
-    <div>
+    // <div className='lg:ml-20 mt-3'>
+    //   <div className='mb-4 '>
+    //     <p className='lg:ml-25 font-semibold'>Login With</p>
+    //     // Remove: lg:ml-20, lg:ml-25 classes
+    <div className='mt-3'>  {/* Simplified */}
       <div className='mb-4'>
-        <p>Login With</p>
+        <p className='font-semibold'>Login With</p>
+        {/* buttons */}
         <div>
           <button className='btn bg-gray-200 my-2 w-full' ><img src={facebook} alt="" />
             <p>Login with facebook</p>
@@ -19,7 +24,7 @@ const RightNavBar = () => {
         </div>
       </div>
       <div>
-        <p>Find Us on</p>
+        <p className='lg:ml-25 font-semibold'>Find Us on</p>
       </div>
     </div>
   )
