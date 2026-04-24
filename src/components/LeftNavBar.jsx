@@ -18,11 +18,11 @@ const LeftNavBar = () => {
     }, [])
   return (
     <div>
-        <h2 className="font-semibold mb-2 lg:-ml-10">All Category ({categories.length})</h2>
-        <div className=" grid justify-center items-center pr-5 gap-2">
+        <div className="flex lg:justify-start md:pl-5 lg:pr-10"><h2 className="font-semibold mb-2 ">All Category ({categories.length})</h2></div>
+        <div className=" grid justify-end items-center  gap-2">
         {
         // categories.map((category,index) => (<NavLink to={`/category/${category.category_id}`}  className={({isActive}) => `btn active bg-base-200 border-none ${isActive && "bg-red-500 text-white"}`} key={index}>{category.category_name}</NavLink>))
-        categories.map((category, index) => (<NavLink to={`/category/${category.category_id}`} className={({ isActive }) => `btn lg:-ml-50 bg-base-300 border border-red-400 hover:text-purple-500 hover:bg-orange-300  transition-all ${isActive && "bg-gray-400 "}`} key={index}>{category.category_name}</NavLink>))
+        categories.map((category, index) => (<NavLink to={`/category/${category.category_id}`} className={({ isActive }) => `btn lg:-ml-50 bg-base-300 border border-red-400 hover:text-purple-500 hover:bg-orange-400  transition-all ${isActive && "bg-gray-400 "}`} key={index}>{category.category_name}</NavLink>))
         
         }
         </div>

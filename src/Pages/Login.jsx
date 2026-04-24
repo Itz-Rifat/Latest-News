@@ -1,20 +1,58 @@
-import { Link } from "react-router-dom"
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom"
+import { AuthContext } from "../provider/AuthProvider";
+import { toast } from "react-toastify";
 
 
 const Login = () => {
+  const { loginUser, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    loginUser(email, password)
+      .then((result) => {
+        // Signed in 
+        const user = result.user;
+
+        setUser(user);
+        // clearing previous values
+        e.target.reset();
+
+        // Show success toast
+        toast.success(`✅ Welcome back, ${user.displayName || 'User'}!`);
+
+        // Redirect to home page immediately
+        navigate('/');
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error("❌ Login failed. Please check your credentials.");
+      });
+
+
+  }
+
   return (
-    <div className="-mt-20 min-h-screen justify-center items-center flex" >
+    <div className="min-h-screen justify-center  items-center flex" >
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <h1 className="pt-4 justify-center flex text-3xl font-bold">Login your account</h1>
         <div className="card-body">
-          <fieldset className="fieldset">
-            <label className="label">Email</label>
-            <input type="email" className="input " placeholder="Email" />
-            <label className="label">Password</label>
-            <input type="password" className="input" placeholder="Password" />
+          <form onSubmit={handleSubmit}
+            className="form">
+            <label className="label pb-1">Email</label>
+            <input type="email" name="email" className="input " placeholder="Email" />
+
+            <label className="label pb-1">Password</label>
+            <input type="password" name="password" className="input" placeholder="Password" />
+
             <div><a className="link link-hover">Forgot password?</a></div>
-            <button className="btn btn-neutral mt-4">Login</button>
-          </fieldset>
+            <div className="justify-center flex"><button className="btn btn-neutral mt-4">Login</button></div>
+          </form>
           <p className="justify-center flex">Don't have An Account ? <Link className="link link-hover px-1.5 text-red-500" to="/auth/register">Register</Link></p>
         </div>
 

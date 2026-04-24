@@ -1,5 +1,6 @@
 import twitter from '../assets/twitter.png'
 import facebook from "../assets/fb.png"
+import { Link, NavLink } from 'react-router-dom'
 
 const RightNavBar = () => {
   return (
@@ -12,9 +13,9 @@ const RightNavBar = () => {
         <p className='font-semibold'>Login With</p>
         {/* buttons */}
         <div>
-          <button className='btn bg-gray-200 my-2 w-full' ><img src={facebook} alt="" />
+          <Link to="/auth/login" className='btn bg-gray-200 my-2 w-full'><img src={facebook} alt="" />
             <p>Login with facebook</p>
-          </button>
+          </Link>
         </div>
         <div>
 

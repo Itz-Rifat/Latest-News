@@ -4,6 +4,11 @@ import CategoryNews from '../Pages/CategoryNews'
 import AuthLayout from '../layouts/AuthLayout'
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
+import NewsDetails from '../Pages/NewsDetails'
+import Career from '../Pages/Career'
+import About from '../Pages/About'
+import Error from '../Pages/Error'
+import PrivateRoute from './PrivateRoute'
 
 const router = createBrowserRouter([
     {
@@ -16,17 +21,26 @@ const router = createBrowserRouter([
             },
             {
                 path: "/category/:id",
-                element: <CategoryNews></CategoryNews>,
+                element: <PrivateRoute><CategoryNews></CategoryNews></PrivateRoute>,
                 // loader: ({params}) => fetch(`https://openapi.programming-hero.com/api/news/category/${params.id}`)
             }
         ],
     },
     {
-        path: "/news",
-        element: <h1>NewsLayout</h1>
+        path: "/news/:id",
+        element: <NewsDetails></NewsDetails>,
+        loader: ({params}) => fetch(`https://openapi.programming-hero.com/api/news/${params.id}`)
     },
     {
-        path: "auth",
+        path: "/career",
+        element: <Career></Career>
+    },
+    {
+        path: "/about",
+        element: <About></About>
+    },
+    {
+        path: "/auth",
         element: <AuthLayout></AuthLayout>,
         children: [
             {
@@ -43,8 +57,8 @@ const router = createBrowserRouter([
     },
     {
         path: "*",
-        element: <h1>Error</h1>
-    },
+        element: <Error></Error>
+    }
 
 ])
 

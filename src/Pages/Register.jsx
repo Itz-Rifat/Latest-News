@@ -1,23 +1,72 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../provider/AuthProvider';
+import { toast } from 'react-toastify';
+
+
 
 const Register = () => {
+  const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(null); // Clear previous errors
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const photoURL = e.target.photo.value;
+
+    createNewUser(email, password)
+      .then(result => {
+        const user = result.user;
+        setUser(user);
+
+        // Update user profile with name and photo
+        return updateUserProfile(name, photoURL || null);
+      })
+      .then(() => {
+        console.log("User registered successfully with profile updated");
+        // Reset form on success
+        e.target.reset();
+        // Show success toast
+        toast.success("✅ Account created successfully! Please log in.");
+        // Redirect to login page immediately
+        navigate('/auth/login');
+      })
+      .catch((error) => {
+        console.error("Registration error:", error.code, error.message);
+        setError(error.message || "Registration failed. Please try again.");
+        toast.error("❌ Registration failed. Please try again.");
+      });
+
+
+  };
+
   return (
-    <div className="-mt-20 min-h-screen justify-center items-center flex" >
+    <div className=" min-h-screen justify-center items-center flex" >
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <h1 className="pt-4 justify-center flex text-3xl font-bold">Register your account</h1>
         <div className="card-body">
-          <fieldset className="fieldset">
+          {error && <div className="alert alert-error text-white mb-4">{error}</div>}
+          <form onSubmit={handleSubmit} className="fieldset">
+
             <label className="label">Your Name</label>
-            <input type="name" className="input " placeholder="Enter your name" />
+            <input type="name" name='name' className="input " placeholder="Enter your name" required />
+
             <label className="label">Photo URL</label>
-            <input type="url" className="input " placeholder="Photo-url" />
+            <input type="url" name='photo' className="input " placeholder="Photo-url" />
+
             <label className="label">Email</label>
-            <input type="email" className="input " placeholder="Enter your email" />
+            <input type="email" name='email' className="input " placeholder="Enter your email" />
+
             <label className="label">Password</label>
-            <input type="password" className="input" placeholder="Enter your password" />
+            <input type="password" name='password' className="input" required placeholder="Enter your password" />
+
             <button className="btn btn-neutral mt-4">Register</button>
-          </fieldset>
+          </form>
           <p className="justify-center flex">Already have An Account ? <Link className="link link-hover px-1.5 text-blue-500" to="/auth/login">Login</Link></p>
         </div>
 

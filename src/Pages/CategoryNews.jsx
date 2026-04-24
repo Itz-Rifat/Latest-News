@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { CiBookmark, CiShare2 } from "react-icons/ci";
 import { FaEye, FaStar } from "react-icons/fa";
 
@@ -11,7 +11,7 @@ const CategoryNews = () => {
         fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data.data)
+                // console.log(data.data)
                 setNews(data.data)
             })
     }, [id])
@@ -39,10 +39,10 @@ const CategoryNews = () => {
             </div> */}
             {
                 news.map((newsItem, index) => (
-                    <div className="-mt-2 mb-7 rounded-lg border border-cyan-400 ">
+                    <div key={newsItem._id || index} className="-mt-2 mb-7 rounded-lg border border-cyan-400 ">
                         <div className="bg-gray-200 p-2 rounded-lg flex justify-between items-center">
                             <div className=" flex gap-2">
-                                <img className="w-10 border-2 border-purple-300 h-10 overflow-hidden shrink-0 rounded-full" src={newsItem.author?.img} alt="" />
+                                <img className="w-10 h-10 border-2 border-purple-300  overflow-hidden shrink-0 rounded-full" src={newsItem.author?.img} alt="" />
                                 <div className="text-[12px]">
                                     <p className="font-semibold">{newsItem.author.name}</p>
                                     <p className="text-gray-500">{newsItem.author?.published_date?.split(" ")[0]}</p>
@@ -62,7 +62,7 @@ const CategoryNews = () => {
                                 <img className="w-full" src={newsItem?.image_url} alt="" />
                             </div>
                             <div>
-                                <p>{newsItem.details}</p>
+                                <p>{newsItem.details}<button className="btn border-none bg-white pb-1 shadow-none link-hover text-red-500"><Link to={`/news/${newsItem._id}`} >Read More</Link></button></p>
                             </div>
                         </div>
 
