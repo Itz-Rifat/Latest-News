@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../provider/AuthProvider";
 import { toast } from "react-toastify";
 
 
 const Login = () => {
+  const [error, setError] = useState({});
   const { loginUser, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -29,8 +30,10 @@ const Login = () => {
         // Redirect to home page immediately
         navigate('/');
       })
-      .catch((error) => {
-        const errorMessage = error.message;
+      .catch((err) => {
+        alert("Login credentials mismatch.")
+        setError({ ...error, login: err.code })
+        const errorMessage = err.message;
         toast.error("❌ Login failed. Please check your credentials.");
       });
 
@@ -49,6 +52,9 @@ const Login = () => {
 
             <label className="label pb-1">Password</label>
             <input type="password" name="password" className="input" placeholder="Password" />
+
+            {/* error message */}
+            {error.login && <label className="label ">{error.login}</label>}
 
             <div><a className="link link-hover">Forgot password?</a></div>
             <div className="justify-center flex"><button className="btn btn-neutral mt-4">Login</button></div>
