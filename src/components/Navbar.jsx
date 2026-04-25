@@ -12,12 +12,12 @@ const Navbar = () => {
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                console.log("User logged out successfully");
+                // console.log("User logged out successfully");
                 
                 navigate("/auth/login")
 
             })
-            .catch(error => console.log(error));
+            .catch(error => (error));
     }
 
     return (
@@ -25,7 +25,7 @@ const Navbar = () => {
             <div>
                 {user && user.displayName && (
                     <div className="flex items-center gap-2">
-                        <span className="font-semibold">{user.displayName}</span>
+                        {/* <span className="font-semibold">{user.displayName}</span> */}
                         <span className="text-sm text-gray-600">{user.email}</span>
                     </div>
                 )}
@@ -39,14 +39,14 @@ const Navbar = () => {
             { 
             user && user?.email?(
             <div className="flex gap-3 justify-between items-center">
-            <img src={User} className="rounded-full" alt="" />
-            <button onClick={handleLogOut} className="btn btn-neutral rounded-none">Log Out</button>
+            {/* <img src={User} className="rounded-full" alt="" /> */}
+            <button onClick={handleLogOut} className="btn btn-neutral rounded-full">Log Out</button>
             </div>
             )
                             : 
             (<div className="flex gap-3 justify-between items-center">
-                <img src={User} className="rounded-full" alt="" />
-                <Link to="/auth/login" className="btn btn-neutral rounded-none">Login</Link>
+                {/* <img src={User} className="rounded-full" alt="" /> */}
+                <Link to="/auth/login" className="btn btn-neutral rounded-full">Login</Link>
             </div> ) 
             }
         </div>
