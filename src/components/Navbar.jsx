@@ -32,8 +32,10 @@ const Navbar = () => {
             </div>
             <div className="space-x-4">
                 <Link to="/">Home</Link>
-                <Link to="/career">Career</Link>
-                <Link to="/about">About</Link>
+
+                {/* just uncomment these two lines to show both career and about links */}
+                {/* <Link to="/career">Career</Link> */}
+                {/* <Link to="/about">About</Link> */}
             </div>
 
             { 

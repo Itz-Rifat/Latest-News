@@ -13,6 +13,16 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_appId,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const isFirebaseConfigValid = Object.values(firebaseConfig).every(
+  (value) => typeof value === 'string' && value.length > 0
+);
+
+let app = null;
+
+if (isFirebaseConfigValid) {
+  app = initializeApp(firebaseConfig);
+} else {
+  console.warn('Firebase config is incomplete or missing. Firebase auth is disabled.');
+}
+
 export default app;
